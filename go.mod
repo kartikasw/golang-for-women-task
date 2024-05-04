@@ -1,3 +1,3 @@
-module sesi-satu
+module golang-for-women
 
 go 1.21.4
