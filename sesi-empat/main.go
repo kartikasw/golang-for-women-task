@@ -27,31 +27,26 @@ func main() {
 
 	switch arg := os.Args[1]; arg {
 	case "arranged":
-		runArraged(&wg)
+		runArraged()
 	case "random":
 		runRandom(&wg)
+		wg.Wait()
 	default:
 		fmt.Println("Pilih random atau arranged.")
 	}
-
-	wg.Wait()
 }
 
-func runArraged(wg *sync.WaitGroup) {
+func runArraged() {
 	ch1 := make(chan interface{})
 	ch2 := make(chan interface{})
 
 	for i := 1; i < 5; i++ {
-		wg.Add(2)
-
 		go func() {
-			defer wg.Done()
 			data := []string{"coba1", "coba2", "coba3"}
 			ch1 <- data
 		}()
 
 		go func(index int) {
-			defer wg.Done()
 			result1 := <-ch1
 			printData(result1, index)
 			data := []string{"bisa1", "bisa2", "bisa3"}
