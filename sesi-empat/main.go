@@ -23,14 +23,11 @@ func main() {
 		return
 	}
 
-	var wg sync.WaitGroup
-
 	switch arg := os.Args[1]; arg {
 	case "arranged":
 		runArraged()
 	case "random":
-		runRandom(&wg)
-		wg.Wait()
+		runRandom()
 	default:
 		fmt.Println("Pilih random atau arranged.")
 	}
@@ -58,7 +55,9 @@ func runArraged() {
 	}
 }
 
-func runRandom(wg *sync.WaitGroup) {
+func runRandom() {
+	var wg sync.WaitGroup
+
 	for i := 1; i < 5; i++ {
 		wg.Add(2)
 
@@ -74,4 +73,6 @@ func runRandom(wg *sync.WaitGroup) {
 			printData(data, index)
 		}(i)
 	}
+
+	wg.Wait()
 }
